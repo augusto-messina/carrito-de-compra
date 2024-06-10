@@ -8,62 +8,72 @@ function pedirNombre() {
 
 pedirNombre();
 
-let option;
-do {
-    option = parseInt(prompt(
-        "Elige un producto:\n" +
-        "1- Zapatillas Nike Jordan 1 $229.999\n" +
-        "2- Vans Knu Skool $189.000\n" +
-        "3- Buzo Jordan Essentials $144.999\n" +
-        "4- Short Tiro $34.299\n" +
-        "5- Bolso Puma x The Ragged $89.499\n" +
-        "0- Finalizar Compra"
-    ));
+const productos = [
+    { nombre: "zapatillas nike:", precio: 200 },
+    { nombre: "buzo levis:", precio: 569 },
+    { nombre: "zapatillas vans:", precio: 989 },
+    { nombre: "bolso puma:", precio: 890 },
+    { nombre: "pantalon adidas:", precio: 340 },
+];
+let carrito = []
 
-    switch (option) {
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-            let cantidad = parseInt(prompt(
-                "Ingresa la cantidad de productos que deseas comprar"
-            ));
-            let costoProducto = 0;
+let seleccion = prompt("desea comprar algun producto de nuestra tienda?")
 
-            switch (option) {
-                case 1:
-                    costoProducto = 229.999;
-                    break;
-                case 2:
-                    costoProducto = 189.999;
-                    break;
-                case 3:
-                    costoProducto = 144.999;
-                    break;
-                case 4:
-                    costoProducto = 34.299;
-                    break;
-                case 5:
-                    costoProducto = 89.499;
-                    break;
-            }
-
-            costoTotal += cantidad * costoProducto;
-            alert("Producto(s) añadido(s) al carrito.");
-            break;
-
-        case 0:
-            break;
-
-        default:
-            alert("Opción inválida.");
-            break;
-    }
-} while (option !== 0);
-
-if (costoTotal > 0) {
-    alert("Gracias por su compra. El costo total de su compra es: $" + costoTotal);
-} else {
-    alert("Gracias por visitar nuestra tienda online.");
+while(seleccion != "si" && seleccion != "no"){
+    alert("por favor ingresa si o no")
+    seleccion = prompt("desea comprar algun producto de nuestra tienda?")
 }
+
+if(seleccion == "si"){
+    alert("estos son los productos de nuestra tienda.")
+    let todoslosProductos = productos.map((producto) => producto.nombre + " " +
+    producto.precio + " Є");
+    alert(todoslosProductos.join(" \n"))
+}else if (seleccion== "no"){
+    alert("gracias por venir, hasta pronto!")
+}
+
+while(seleccion != "no"){
+    let producto = prompt("agrega un producto al carrito")
+    let precio = 0
+
+    if(producto == "zapatillas nike" || producto == "zapatillas vans" || producto == "buzo levis"
+        || producto == "bolso puma" || producto == "pantalon adidas"){
+        switch(producto) {
+            case "zapatillas nike":
+            precio = 200;
+            break;
+            case "zapatillas vans":
+            precio = 989;
+            break;
+            case "buzo levis":
+            precio = 569;
+            break;
+            case "bolso puma":
+            precio = 890;
+            break;
+            case "pantalon adidas":
+            precio = 340;
+            break;
+            default:
+                break;
+        }
+    let unidades = parseInt(prompt("cuantas unidades quieres llevar"))
+
+    carrito.push({producto, unidades, precio})
+    }else {
+        alert("no tenemos ese producto")
+    }
+
+    seleccion = prompt("desea seguir comprando?")
+    while(seleccion === "no"){
+        alert("gracias por la compra! hasta pronto.")
+        carrito.forEach((carritoFinal) => {
+            alert(`producto: ${carritoFinal.producto}\n unidades: ${carritoFinal.unidades}\n total a pagar por podructos es: ${carritoFinal.unidades * carritoFinal.precio}\n`)
+        })
+    break;
+    }
+}
+
+const total = carrito.reduce((acc, el) => acc + el.precio * el.unidades, 0)
+alert(`el total a pagar por su compra es: ${total}`)
